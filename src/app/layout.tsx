@@ -15,7 +15,7 @@ const shareDescription =
   "Tirá el dado, resolvé sumas y restas y recorré Uruguay junto a sus animales autóctonos. Un juego para chicas y chicos de 4 a 8 años.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://apmauj.github.io"),
+  metadataBase: new URL("https://apmauj.github.io/senda-nativa/"),
   title: shareTitle,
   description: shareDescription,
   applicationName: "Senda Nativa",
