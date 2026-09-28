@@ -4,6 +4,7 @@ import { SocialCard } from "./social-card";
 export const alt = "Senda Nativa, juego educativo de sumas y restas con animales del Uruguay";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const dynamic = "force-static";
 
 export default function OpenGraphImage() {
   return new ImageResponse(<SocialCard />, size);
