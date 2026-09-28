@@ -1,0 +1,24 @@
+# dependencias
+node_modules/
+
+# configuración local
+.env
+.env.*
+!.env.example
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# base de datos
+db/*.db
+db/*.db-journal
+
+# logs y sistema
+*.log
+.DS_Store
+
+# archivos de respaldo del script de export
+next.config.ts.bak
+.api-backup-tmp/
