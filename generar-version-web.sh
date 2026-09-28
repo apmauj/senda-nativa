@@ -75,6 +75,10 @@ if [ "$TARGET" = "pages" ]; then
   echo "▶ Preparando imágenes Open Graph y Twitter…"
   cp "$OUT/opengraph-image" "$OUT/senda-nativa-og.png"
   cp "$OUT/twitter-image" "$OUT/senda-nativa-twitter.png"
+  perl -pi -e '
+    s{\Q$ENV{PAGES_BASE_PATH}\E/opengraph-image\?[^\"]+}{$ENV{PAGES_BASE_PATH}/senda-nativa-og.png}g;
+    s{\Q$ENV{PAGES_BASE_PATH}\E/twitter-image\?[^\"]+}{$ENV{PAGES_BASE_PATH}/senda-nativa-twitter.png}g;
+  ' "$OUT/index.html"
 fi
 
 if [ "$TARGET" = "standalone" ]; then
