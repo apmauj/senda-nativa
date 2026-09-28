@@ -1,5 +1,9 @@
 # 🌾 SENDA NATIVA
 
+<p align="center">
+  <img src="public/senda-nativa-portada.png" alt="Senda Nativa, juego educativo de matemática con un carpincho en el paisaje uruguayo" width="680">
+</p>
+
 **El recorrido de los animales autóctonos del Uruguay** — juego de tablero
 educativo de sumas y restas para chicas y chicos de 4 a 8 años.
 
