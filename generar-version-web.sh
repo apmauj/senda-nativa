@@ -20,6 +20,8 @@ if [ "$TARGET" != "standalone" ] && [ "$TARGET" != "pages" ]; then
 fi
 if [ "$TARGET" = "standalone" ]; then
   unset PAGES_BASE_PATH
+else
+  export PAGES_BASE_PATH="${PAGES_BASE_PATH:-/senda-nativa}"
 fi
 
 # --- elegir runner -------------------------------------------------
@@ -73,11 +75,23 @@ if [ "$TARGET" = "pages" ]; then
   # extensión que genera Next.js. Copiarlas con .png evita previews con
   # tipo application/octet-stream en los servicios que comparten el link.
   echo "▶ Preparando imágenes Open Graph y Twitter…"
-  cp "$OUT/opengraph-image" "$OUT/senda-nativa-og.png"
-  cp "$OUT/twitter-image" "$OUT/senda-nativa-twitter.png"
-  perl -pi -e '
-    s{\Q$ENV{PAGES_BASE_PATH}\E/opengraph-image\?[^\"]+}{$ENV{PAGES_BASE_PATH}/senda-nativa-og.png}g;
-    s{\Q$ENV{PAGES_BASE_PATH}\E/twitter-image\?[^\"]+}{$ENV{PAGES_BASE_PATH}/senda-nativa-twitter.png}g;
+  SHARE_IMAGE_VERSION="${GITHUB_SHA:-local}"
+  SHARE_IMAGE_VERSION="${SHARE_IMAGE_VERSION:0:12}"
+  OG_IMAGE_NAME="senda-nativa-og-${SHARE_IMAGE_VERSION}.png"
+  TWITTER_IMAGE_NAME="senda-nativa-twitter-${SHARE_IMAGE_VERSION}.png"
+  export OG_IMAGE_NAME TWITTER_IMAGE_NAME
+  cp "$OUT/opengraph-image" "$OUT/$OG_IMAGE_NAME"
+  cp "$OUT/twitter-image" "$OUT/$TWITTER_IMAGE_NAME"
+  perl -0pi -e '
+    my $head_end = index($_, "</head>");
+    die "No se encontró </head> en el HTML exportado" if $head_end < 0;
+    my $head = substr($_, 0, $head_end);
+    my $base = $ENV{PAGES_BASE_PATH} // "";
+    $base =~ s{/$}{};
+    my $og = $head =~ s{\Q$base\E/opengraph-image\?[^\"]+}{$base/$ENV{OG_IMAGE_NAME}}g;
+    my $twitter = $head =~ s{\Q$base\E/twitter-image\?[^\"]+}{$base/$ENV{TWITTER_IMAGE_NAME}}g;
+    die "No se encontraron las etiquetas de preview en el HTML exportado" unless $og && $twitter;
+    substr($_, 0, $head_end) = $head;
   ' "$OUT/index.html"
 fi
 

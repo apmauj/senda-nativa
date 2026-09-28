@@ -16,6 +16,7 @@ import {
 } from './questions'
 import { randomCollectible } from './objects'
 import { isSoundEnabled, playSound, setSoundEnabled, speak } from './sound'
+import { saveLocalGameResult } from './history'
 import type {
   Board,
   CollectibleInfo,
@@ -24,6 +25,7 @@ import type {
   PlayerState,
   PresetKey,
   Question,
+  StoredGameResult,
 } from './types'
 import { ANIMALS, getAnimal } from './animals'
 
@@ -93,7 +95,7 @@ interface GameState {
   arrival: { playerId: string; order: number } | null
   arrivalCounter: number
   soundOn: boolean
-  saveState: 'idle' | 'saving' | 'saved' | 'error'
+  saveState: 'idle' | 'saving' | 'saved' | 'saved-local' | 'error'
 
   // acciones
   goScreen: (s: Screen) => void
@@ -473,32 +475,39 @@ export const useGameStore = create<GameState>((set, get) => ({
     const { board, players, presetKey, operations } = get()
     const sorted = [...players].sort((a, b) => (a.arrivalOrder ?? 99) - (b.arrivalOrder ?? 99))
     const winner = sorted[0]
+    const game = {
+      presetKey,
+      operations,
+      boardTiles: board?.totalTiles ?? 0,
+      winnerName: winner?.name ?? '',
+      winnerAnimalId: winner?.animalId ?? 'carpincho',
+      players: players.map((p) => ({
+        name: p.name,
+        animalId: p.animalId,
+        points: p.points,
+        correct: p.correct,
+        attempts: p.attempts,
+        rolls: p.rolls,
+        objects: p.objects.length,
+        arrivalOrder: p.arrivalOrder,
+      })),
+    } satisfies Omit<StoredGameResult, 'id' | 'createdAt'>
+    const locallySaved = saveLocalGameResult({
+      ...game,
+      id: newId(),
+      createdAt: new Date().toISOString(),
+    })
+
     fetch('/api/partidas', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        presetKey,
-        operations,
-        boardTiles: board?.totalTiles ?? 0,
-        winnerName: winner?.name ?? '',
-        winnerAnimalId: winner?.animalId ?? 'carpincho',
-        players: players.map((p) => ({
-          name: p.name,
-          animalId: p.animalId,
-          points: p.points,
-          correct: p.correct,
-          attempts: p.attempts,
-          rolls: p.rolls,
-          objects: p.objects.length,
-          arrivalOrder: p.arrivalOrder,
-        })),
-      }),
+      body: JSON.stringify(game),
     })
       .then((r) => {
         if (!r.ok) throw new Error('fallo el guardado')
         set({ saveState: 'saved' })
       })
-      .catch(() => set({ saveState: 'error' }))
+      .catch(() => set({ saveState: locallySaved ? 'saved-local' : 'error' }))
   },
 }))
 

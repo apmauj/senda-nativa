@@ -67,6 +67,10 @@ export function ResultScreen() {
               <>
                 <CheckCircle2 className="h-4 w-4 text-green-600" aria-hidden /> PARTIDA GUARDADA
               </>
+            ) : saveState === 'saved-local' ? (
+              <>
+                <CheckCircle2 className="h-4 w-4 text-green-600" aria-hidden /> GUARDADA EN ESTE DISPOSITIVO
+              </>
             ) : saveState === 'error' ? (
               <>
                 <AlertTriangle className="h-4 w-4 text-amber-600" aria-hidden /> NO SE PUDO GUARDAR LA PARTIDA

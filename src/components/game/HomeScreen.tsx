@@ -23,6 +23,7 @@ import { useGameStore } from '@/lib/game/store'
 import { ANIMALS, getAnimal } from '@/lib/game/animals'
 import { AnimalArt } from '@/components/animals'
 import { PRESETS } from '@/lib/game/presets'
+import { getLocalGameHistory } from '@/lib/game/history'
 import type { StoredGameResult } from '@/lib/game/types'
 import { Button } from '@/components/ui/button'
 import {
@@ -197,13 +198,15 @@ function RecentGames() {
 
   useEffect(() => {
     let cancelled = false
+    setPartidas(getLocalGameHistory())
+
     fetch('/api/partidas')
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error('fallo'))))
       .then((data) => {
         if (!cancelled) setPartidas(data.partidas ?? [])
       })
       .catch(() => {
-        if (!cancelled) setPartidas([])
+        if (!cancelled) setPartidas(getLocalGameHistory())
       })
     return () => {
       cancelled = true

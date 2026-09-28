@@ -1,3 +1,166 @@
+export function SquareSocialCard() {
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        position: 'relative',
+        overflow: 'hidden',
+        backgroundColor: '#fdf9ec',
+        color: '#355b37',
+        fontFamily: 'Arial, sans-serif',
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          top: -130,
+          right: -120,
+          width: 430,
+          height: 430,
+          borderRadius: 215,
+          backgroundColor: '#e6efcf',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: -165,
+          left: -135,
+          width: 420,
+          height: 420,
+          borderRadius: 210,
+          backgroundColor: '#f3e6bd',
+        }}
+      />
+
+      <div
+        style={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          padding: '72px 84px',
+          textAlign: 'center',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            borderRadius: 24,
+            padding: '12px 22px',
+            backgroundColor: '#dcecc9',
+            color: '#356c3d',
+            fontSize: 23,
+            fontWeight: 800,
+            letterSpacing: 1,
+          }}
+        >
+          JUEGO EDUCATIVO · 4 A 8 AÑOS
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 18,
+            marginTop: 30,
+            fontSize: 94,
+            fontWeight: 900,
+            letterSpacing: -2,
+            lineHeight: 1,
+          }}
+        >
+          <span style={{ color: '#28643c' }}>SENDA</span>
+          <span style={{ color: '#e6a92e' }}>NATIVA</span>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            maxWidth: 850,
+            marginTop: 22,
+            color: '#5e6252',
+            fontSize: 31,
+            fontWeight: 700,
+            lineHeight: 1.35,
+          }}
+        >
+          Tirá el dado, resolvé sumas y restas y recorré Uruguay.
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 370,
+            height: 370,
+            marginTop: 36,
+            border: '12px solid #fffdf5',
+            borderRadius: 200,
+            backgroundColor: '#d4e7b8',
+            boxShadow: '0 18px 35px rgba(53, 91, 55, 0.16)',
+          }}
+        >
+          <svg width="310" height="310" viewBox="0 0 300 300" aria-hidden="true">
+            <ellipse cx="150" cy="250" rx="82" ry="17" fill="rgba(82, 112, 61, 0.2)" />
+            <circle cx="91" cy="91" r="32" fill="#a9744f" />
+            <circle cx="209" cy="91" r="32" fill="#a9744f" />
+            <circle cx="91" cy="91" r="16" fill="#d9b08c" />
+            <circle cx="209" cy="91" r="16" fill="#d9b08c" />
+            <path
+              d="M72 153c0-58 31-98 78-98s78 40 78 98c0 42-16 72-43 86-11 6-23 9-35 9s-24-3-35-9c-27-14-43-44-43-86Z"
+              fill="#a9744f"
+            />
+            <ellipse cx="150" cy="184" rx="69" ry="43" fill="#c89b72" />
+            <circle cx="119" cy="137" r="11" fill="#fffdf5" />
+            <circle cx="181" cy="137" r="11" fill="#fffdf5" />
+            <circle cx="122" cy="139" r="5" fill="#3b2a20" />
+            <circle cx="178" cy="139" r="5" fill="#3b2a20" />
+            <ellipse cx="150" cy="178" rx="13" ry="9" fill="#3b2a20" />
+            <path
+              d="M150 186v9m0 0c-9 10-21 11-29 3m29-3c9 10 21 11 29 3"
+              fill="none"
+              stroke="#3b2a20"
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        <div style={{ display: 'flex', gap: 14, marginTop: 30 }}>
+          {[
+            ['SUMAS', '#f7e4aa'],
+            ['RESTAS', '#dbe9c4'],
+            ['ANIMALES DEL URUGUAY', '#f2dfd0'],
+          ].map(([label, background]) => (
+            <div
+              key={label}
+              style={{
+                display: 'flex',
+                borderRadius: 20,
+                padding: '12px 17px',
+                backgroundColor: background,
+                color: '#5f5b48',
+                fontSize: 18,
+                fontWeight: 800,
+                letterSpacing: 0.4,
+              }}
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function SocialCard() {
   return (
     <div
