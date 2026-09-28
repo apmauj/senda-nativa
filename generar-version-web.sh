@@ -68,6 +68,15 @@ echo "▶ Compilando la versión estática (next build)…"
 
 OUT="out"
 
+if [ "$TARGET" = "pages" ]; then
+  # GitHub Pages no infiere image/png para las rutas de metadata sin
+  # extensión que genera Next.js. Copiarlas con .png evita previews con
+  # tipo application/octet-stream en los servicios que comparten el link.
+  echo "▶ Preparando imágenes Open Graph y Twitter…"
+  cp "$OUT/opengraph-image" "$OUT/senda-nativa-og.png"
+  cp "$OUT/twitter-image" "$OUT/senda-nativa-twitter.png"
+fi
+
 if [ "$TARGET" = "standalone" ]; then
   # --- 4a) rutas relativas en los HTML (doble clic sin servidor) ---
   echo "▶ Convirtiendo rutas a relativas…"
