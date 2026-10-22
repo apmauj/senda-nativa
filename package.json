@@ -2,6 +2,7 @@
   "name": "senda-nativa",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "bun@1.4.4",
   "description": "Juego de tablero educativo de sumas y restas con animales autóctonos del Uruguay",
   "scripts": {
     "dev": "next dev -p 3000",
